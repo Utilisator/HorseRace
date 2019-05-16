@@ -10,6 +10,7 @@ namespace HorseRace
     {
         static void Main(string[] args)
         {
+            Console.ReadKey(true);
         }
     }
 }
