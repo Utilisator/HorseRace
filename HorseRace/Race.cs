@@ -26,14 +26,13 @@ namespace HorseRace
 
         private void CalculateMargin()
         {
-           margin = _runners.Sum(x => x.DecimalPrice);
+            margin = _runners.Sum(x => x.DecimalPrice);
         }
 
-        
+
 
         public Runner CalculateWinner()
         {
-            //var rnd = new Random();
             double sumOfAllChances = _runners.Sum(x => x.Chance(margin));
             double sumU = Math.Ceiling(sumOfAllChances);
             double sumD = Math.Floor(sumOfAllChances);
@@ -48,6 +47,8 @@ namespace HorseRace
                 if (sum >= pick)
                 {
                     res = item;
+                    _runners[_runners.IndexOf(res)].winCount++;
+
                     break;
                 }
             }

@@ -25,7 +25,7 @@ namespace HorseRace
             for (int i = 0; i < 1000000; i++)
             {
                 var winner = r.RunRace();
-                r.Runners[r.Runners.IndexOf(winner)].winCount++;
+                //r.Runners[r.Runners.IndexOf(winner)].winCount++;
             }
             foreach (var item in r.Runners)
             {
