@@ -10,40 +10,62 @@ namespace HorseRace
     {
         static readonly Random rnd = new Random();
         private List<Runner> _runners;
-
+        private double margin;
 
         public Race()
         {
             _runners = new List<Runner>();
         }
-
-        public double CalculateMargin()
-        {
-            return _runners.Sum(x => x.DecimalPrice);
-        }
-
         public List<Runner> Runners
         {
             get { return _runners; }
             set { _runners = value; }
         }
 
-        public Runner CalculateWinner()
-        {
-            int index = rnd.Next(_runners.Count);
+        public double Margin { get { return margin; } }
 
-            return _runners[index];
+        private void CalculateMargin()
+        {
+           margin = _runners.Sum(x => x.DecimalPrice);
         }
 
-        void DisplayWinner(Runner runner) => Console.WriteLine($"The winner is: {runner.Name}, {runner.FractionalPrice}, Chance: {runner.Chance(CalculateMargin()):0.00}");
+        
 
-        public void RunRace()
+        public Runner CalculateWinner()
         {
-            var margin = CalculateMargin();
+            //var rnd = new Random();
+            double sumOfAllChances = _runners.Sum(x => x.Chance(margin));
+            double sumU = Math.Ceiling(sumOfAllChances);
+            double sumD = Math.Floor(sumOfAllChances);
+            var pick = rnd.Next((int)sumU);
+
+            double sum = 0;
+            Runner res = new Runner();
+
+            foreach (var item in _runners)
+            {
+                sum += item.Chance(margin);
+                if (sum >= pick)
+                {
+                    res = item;
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        void DisplayWinner(Runner runner) => Console.WriteLine($"The winner is: {runner.Name}, {runner.FractionalPrice}, Chance: {runner.Chance(margin):0.00}");
+
+        public Runner RunRace()
+        {
+            CalculateMargin();
+
             if (margin > 140 || margin < 110)
                 throw new ArgumentOutOfRangeException($"'{nameof(margin)}' must be between 110% and 140%");
             var winner = CalculateWinner();
-            DisplayWinner(winner);
+            //DisplayWinner(winner);
+            return winner;
         }
     }
 }

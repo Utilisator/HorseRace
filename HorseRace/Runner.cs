@@ -11,6 +11,7 @@ namespace HorseRace
         private string _name;
         private int _x;
         private int _y;
+        public int winCount;
 
         public Runner()
         {
@@ -30,6 +31,18 @@ namespace HorseRace
             set { _name = value; }
         }
 
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
         public string FractionalPrice
         {
             get { return $"{_x}/{_y}"; }
@@ -45,7 +58,7 @@ namespace HorseRace
 
         public double Chance(double margin)
         {
-            return 100 * (100 / (1 + _x / _y)) / margin;
+            return (DecimalPrice / margin) * 100;
         }
     }
 }

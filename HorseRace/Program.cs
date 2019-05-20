@@ -19,10 +19,18 @@ namespace HorseRace
                     {new Runner("Test4", 8, 1)},
                 }
             };
+            //r.CalculateMargin();
+            //Console.WriteLine(r.Margin);
 
             for (int i = 0; i < 1000000; i++)
             {
-                r.RunRace();
+                var winner = r.RunRace();
+                r.Runners[r.Runners.IndexOf(winner)].winCount++;
+            }
+            foreach (var item in r.Runners)
+            {
+                Console.WriteLine($"{item.Name}\t{item.Chance(r.Margin):0.00}\t{item.winCount}");
+                //Console.WriteLine($"{item.Name}\t{item.Chance(r.Margin):0.00}");
             }
             Console.ReadKey(true);
         }
