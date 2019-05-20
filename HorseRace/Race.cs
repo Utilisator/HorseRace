@@ -30,12 +30,17 @@ namespace HorseRace
         }
 
 
-
+        /// <summary>
+        /// Calculating winner according this algorythm
+        /// https://en.wikipedia.org/wiki/Alias_method and 
+        /// http://code.activestate.com/recipes/576564-walkers-alias-method-for-random-objects-with-diffe/
+        /// </summary>
+        /// <returns></returns>
         public Runner CalculateWinner()
         {
             double sumOfAllChances = _runners.Sum(x => x.Chance(margin));
             double sumU = Math.Ceiling(sumOfAllChances);
-            double sumD = Math.Floor(sumOfAllChances);
+            
             var pick = rnd.Next((int)sumU);
 
             double sum = 0;
@@ -58,15 +63,15 @@ namespace HorseRace
 
         void DisplayWinner(Runner runner) => Console.WriteLine($"The winner is: {runner.Name}, {runner.FractionalPrice}, Chance: {runner.Chance(margin):0.00}");
 
-        public Runner RunRace()
+        public void RunRace(bool displayWinners = false)
         {
             CalculateMargin();
 
             if (margin > 140 || margin < 110)
                 throw new ArgumentOutOfRangeException($"'{nameof(margin)}' must be between 110% and 140%");
             var winner = CalculateWinner();
-            //DisplayWinner(winner);
-            return winner;
+            if (displayWinners) DisplayWinner(winner);
+
         }
     }
 }

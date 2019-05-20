@@ -9,50 +9,45 @@ namespace HorseRace
     public class Runner
     {
         private string _name;
-        private int _x;
-        private int _y;
         public int winCount;
 
         public Runner()
         {
-            _x = 0; _y = 0;
+            X = 1; Y = 1; // default values 
         }
 
         public Runner(string name, int x, int y)
         {
-            _name = name;
-            _x = x;
-            _y = y;
+            Name = name; X = x; Y = y;
+
+            if (y == 0 ) throw new ArgumentOutOfRangeException($"y must be greather than 0 ");
         }
 
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                if (value.Length > 18 || value.Any(c => char.IsDigit(c)))
+                    throw new ArgumentOutOfRangeException($"The length of '{nameof(value)}' must be maximum 18 characters long (A-Z only including spaces)");
+                _name = value;
+            }
         }
 
-        public int X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
+        public int X { get; set; }
 
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
+        public int Y { get; set; }
 
         public string FractionalPrice
         {
-            get { return $"{_x}/{_y}"; }
+            get { return $"{X}/{Y}"; }
         }
 
         public double DecimalPrice
         {
             get
             {
-                return 100 / (1 + (double)_x / (double)_y);
+                return 100 / (1 + (double)X / (double)Y);
             }
         }
 

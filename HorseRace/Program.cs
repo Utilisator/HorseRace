@@ -10,27 +10,31 @@ namespace HorseRace
     {
         static void Main(string[] args)
         {
-            Race r = new Race()
+            Console.Write("Input iteration count: ");
+            int iterations = Convert.ToInt32(Console.ReadLine());
+
+
+            Race r = new Race()            
             {
                 Runners = new List<Runner>() {
-                    { new Runner("Test1", 1, 2) },
-                    {new Runner("Test2", 2, 1)},
-                    {new Runner("Test3", 3, 1)},
-                    {new Runner("Test4", 8, 1)},
+                    { new Runner("Test A", 1, 2) },
+                    {new Runner("Test B", 2, 1)},
+                    {new Runner("Test C", 3, 1)},
+                    {new Runner("Test D", 8, 1)},
                 }
             };
-            //r.CalculateMargin();
-            //Console.WriteLine(r.Margin);
-
-            for (int i = 0; i < 1000000; i++)
+            
+            for (int i = 0; i < iterations; i++)
             {
-                var winner = r.RunRace();
-                //r.Runners[r.Runners.IndexOf(winner)].winCount++;
+                r.RunRace(displayWinners: false);
+
             }
+            Console.WriteLine($"\n Iterations: {iterations}");
+            Console.WriteLine(" Name\t|chance\t|wincount");
+            Console.WriteLine("-------------------------");
             foreach (var item in r.Runners)
             {
-                Console.WriteLine($"{item.Name}\t{item.Chance(r.Margin):0.00}\t{item.winCount}");
-                //Console.WriteLine($"{item.Name}\t{item.Chance(r.Margin):0.00}");
+                Console.WriteLine($" {item.Name}\t|{item.Chance(r.Margin):0.00}\t|{item.winCount}");
             }
             Console.ReadKey(true);
         }

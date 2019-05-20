@@ -11,21 +11,27 @@ namespace UnitTestProjectRace
         [TestMethod]
         public void TestMethodRunRace()
         {
+            int iterations = 1000000;
+
+
             Race r = new Race()
             {
                 Runners = new List<Runner>() {
-                    { new Runner("Test1", 1, 2) },
-                    {new Runner("Test1", 2, 1)},
-                    {new Runner("Test1", 3, 1)},
-                    {new Runner("Test1", 8, 1)},
+                    { new Runner("Test A", 1, 2) },
+                    {new Runner("Test B", 2, 1)},
+                    {new Runner("Test C", 3, 1)},
+                    {new Runner("Test D", 8, 1)},
                 }
             };
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < iterations; i++)
             {
-                r.CalculateWinner();
+                r.RunRace(displayWinners: false);
+
             }
+
             
+            Assert.IsTrue(r.Runners[3].winCount >= 460000 && r.Runners[0].winCount <= 500000);
         }
     }
 }
